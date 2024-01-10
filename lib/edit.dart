@@ -7,15 +7,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class Edit extends ConsumerWidget {
   Edit({Key? key, required this.title}) : super(key: key);
   final String title;
-  final List<int> _items = List<int>.generate(6, (int index) => index+1);
+  final List<int> _items = List<int>.generate(6, (int index) => index);
 
 
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-   // final completedTodos= ref.watch(completedTodosProvider);
+    //final completedTodos= ref.watch(completedTodosProvider);
     //final  unfinishedTodos = ref.watch(unfinishedTodosProvider);
-
     return Scaffold(
         appBar: AppBar(
           title: Text(title),
@@ -35,30 +34,26 @@ class Edit extends ConsumerWidget {
          child: Consumer(
           builder: (context, ref, child) {
             final List<ToDo> todoList = ref.watch(todosProvider);
-
-           // ref.listen<List<ToDo>>(unfinishedTodosProvider, (List<ToDo>? previousTodos, List<ToDo> newTodos) {
-            //  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            //   content: Text('現在${newTodos.length}個の未完了タスクがあります'),
-             //  duration: const Duration(milliseconds: 600),
-
-   // ));
-            //});
+           ref.listen<List<ToDo>>(unfinishedTodosProvider, (List<ToDo>? previousTodos, List<ToDo> newTodos) {
+             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+               content: Text('現在${newTodos.length}個の未完了タスクがあります'),
+               duration: const Duration(milliseconds: 600),
+             ));
+            });
             return ReorderableListView(
               header:  Card(
-               //key: const Key('todoList'),
                 child: ListTile(
-                 // key:  const Key('todo'),
                   leading: const Icon(Icons.add),
                   title: const Text('タスク追加'),
                   onTap: ()=>showDialog<String>(
                     context: context,
-                    builder: (context,) {
-                      String description = '';
+                    builder: (context) {
+                      String text = '';
                       return AlertDialog(
                         title: const Text('タスクを追加'),
                         content: TextField(
                           onChanged: (value){
-                            description = value;
+                            text = value;
                           },
                         ),
                         actions: <Widget>[
@@ -67,7 +62,7 @@ class Edit extends ConsumerWidget {
                           ),
                           TextButton(onPressed: (){
                             ref.read(todosProvider.notifier).addTodo(
-                                ToDo(id: DateTime.now().millisecondsSinceEpoch, description: description, isCompleted: false)
+                                ToDo(id: DateTime.now().millisecondsSinceEpoch, description: text),
                             );
                             Navigator.pop(context,'OK');
                           },
@@ -79,6 +74,7 @@ class Edit extends ConsumerWidget {
                   ),
                 ),
               ),
+              //key: const ValueKey('ReorderableListView'),
               onReorder: (int oldIndex, int newIndex) {
 
                 if (oldIndex < newIndex) {
@@ -88,14 +84,13 @@ class Edit extends ConsumerWidget {
                 _items.insert(newIndex, item);
               },
               footer:  Card(
-                //key: const Key('item'),
                 child: ListTile(
-                 //key: const Key('description'),
                   leading: const Icon(Icons.add),
                   title: const Text('タスク追加'),
+                  tileColor: Colors.grey[500],
                   onTap: ()=>showDialog<String>(
                     context: context,
-                    builder: (context,) {
+                    builder: (context) {
                       String description = '';
                       return AlertDialog(
                         title: const Text('タスクを追加'),
@@ -110,7 +105,7 @@ class Edit extends ConsumerWidget {
                           ),
                           TextButton(onPressed: (){
                             ref.read(todosProvider.notifier).addTodo(
-                                ToDo(id: DateTime.now().millisecondsSinceEpoch, description: description, isCompleted: false)
+                                ToDo(id: DateTime.now().millisecondsSinceEpoch, description: description),
                             );
                             Navigator.pop(context,'OK');
                           },
@@ -124,7 +119,7 @@ class Edit extends ConsumerWidget {
               ),
               children: todoList.map<Widget>((ToDo todo) {
                 return Card(
-                  key:  Key(todo.description),
+                  key:  Key('$todo.id'),
                   child: ListTile(
                     tileColor:  Colors.green[200], //: Colors.grey,
                     title: Text(todo.description),
@@ -139,11 +134,12 @@ class Edit extends ConsumerWidget {
                       context: context,
                       builder: (context) {
                         String description = '';
+                        TextEditingController textEditingController = TextEditingController();
                         return AlertDialog(
                           title: const Text('編集'),
                           content: TextField(
                             onChanged: (value){
-                              description = value;
+                             textEditingController.text = todo.description;
                             },
                           ),
                           actions: [
@@ -152,12 +148,9 @@ class Edit extends ConsumerWidget {
                               child: const Text('Cancel'),
                             ),
                             TextButton(
-                              onPressed:(){Navigator.pop(context,description);
+                              onPressed:(){Navigator.pop(context);
 
-                               ref.read(todosProvider.notifier).updateTodo(todo.description);
-                                //editTodo(
-                                  // ToDo(id: todo.id, description: todo.description, isCompleted: false)
-                                //);
+                              ref.read(todosProvider.notifier).editTodo(id: todo.id, description: textEditingController.text );
                               },
                               child: const Text('OK'),
                             ),

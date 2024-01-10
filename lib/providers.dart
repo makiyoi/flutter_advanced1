@@ -1,11 +1,10 @@
-//import 'package:flutter/material.dart';
 import 'package:flutter_advanced_1/models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
   const List<ToDo> todosList = [
-    ToDo(id: 0,description: 'task1', isCompleted: false),
-    ToDo(id: 1,description: 'task2', isCompleted: false),
-    ToDo(id: 2,description: 'task3', isCompleted: false),
+    ToDo(id: 1,description: 'task1'),
+    ToDo(id: 2,description: 'task2'),
+    ToDo(id: 3,description: 'task3'),
  ];
 
 class TodosNotifier extends StateNotifier<List<ToDo>> {
@@ -72,28 +71,19 @@ class TodosNotifier extends StateNotifier<List<ToDo>> {
    // }
    // state =newState;
  // }
- void editTodo(ToDo todo){
+ void editTodo({required int id, required String description}){
     state= [
       for(final todo in state)
         if(todo.id == todo.id)
           todo.copyWith(
             id: todo.id,
             description: todo.description,
-            isCompleted: todo.isCompleted,
           )
       else
         todo,
     ];
  }
-  void updateTodo(String todo) {
-    state = [for (final todo in state) todo];
-  }
-
 }
-
-
-
-
 
 
 final todosProvider = StateNotifierProvider<TodosNotifier,List<ToDo>>((ref) {
@@ -102,10 +92,10 @@ final todosProvider = StateNotifierProvider<TodosNotifier,List<ToDo>>((ref) {
 
 
 
-  final completedTodosProvider =  Provider<List<ToDo>>((ref) {
-    final todos = ref.watch(todosProvider);
-    return todos.where((todo) => todo.isCompleted).toList();
-   });
+ // final completedTodosProvider =  Provider<List<ToDo>>((ref) {
+   // final todos = ref.watch(todosProvider);
+  //  return todos.where((todo) => todo.isCompleted).toList();
+ //  });
   final unfinishedTodosProvider =  Provider<List<ToDo>>((ref) {
     final todos = ref.watch(todosProvider);
    return todos.where((todo) => !todo.isCompleted).toList();
