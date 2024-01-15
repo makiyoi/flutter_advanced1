@@ -119,15 +119,14 @@ class Edit extends ConsumerWidget {
               ),
               children: todoList.map<Widget>((ToDo todo) {
                 return Card(
-                  key:  Key('$todo.id'),
+                  key:  Key('$todo'),
                   child: ListTile(
                     tileColor:  Colors.green[200], //: Colors.grey,
                     title: Text(todo.description),
                     trailing: IconButton(
                       icon:  const Icon(Icons.close,color: Colors.green,),
                       onPressed: (){ref.read(todosProvider.notifier).removeTodo(
-                          todo.id
-                      );
+                          todo.id);
                       },
                     ),
                     onTap: ()=>showDialog<String>(
@@ -148,8 +147,8 @@ class Edit extends ConsumerWidget {
                               child: const Text('Cancel'),
                             ),
                             TextButton(
-                              onPressed:(){Navigator.pop(context);
-
+                              onPressed:(){
+                                Navigator.pop(context,'Ok');
                               ref.read(todosProvider.notifier).editTodo(id: todo.id, description: textEditingController.text );
                               },
                               child: const Text('OK'),

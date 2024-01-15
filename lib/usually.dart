@@ -40,13 +40,13 @@ class Usually extends ConsumerWidget {
                       if (oldIndex < newIndex) {
                         newIndex -= 1;
                       }
-                      final int items = _items.removeAt(oldIndex);
-                      _items.insert(newIndex, items);
+                      final ToDo todoList = todosList.removeAt(oldIndex);
+                      todosList.insert(newIndex, todoList);
                    // });
                     },
                   children: todosList.map<Widget>((ToDo todo) {
                     return Card(
-                        key: Key('$todo.id '),
+                        key: Key(todo.id.toString()),
                         child: CheckboxListTile(
                           value: todo.isCompleted,
                           checkColor: Colors.green,
