@@ -80,8 +80,8 @@ class Edit extends ConsumerWidget {
                 if (oldIndex < newIndex) {
                   newIndex -= 1;
                 }
-                final int item = _items.removeAt(oldIndex);
-                _items.insert(newIndex, item);
+                final ToDo todo = todoList.removeAt(oldIndex);
+                todoList.insert(newIndex, todo);
               },
               footer:  Card(
                 child: ListTile(
@@ -119,7 +119,7 @@ class Edit extends ConsumerWidget {
               ),
               children: todoList.map<Widget>((ToDo todo) {
                 return Card(
-                  key:  Key('$todo'),
+                  key:  Key(todo.id.toString()),
                   child: ListTile(
                     tileColor:  Colors.green[200], //: Colors.grey,
                     title: Text(todo.description),
