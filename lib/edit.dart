@@ -101,7 +101,7 @@ class Edit extends ConsumerWidget {
                           ),
                           TextButton(onPressed: (){
                             ref.read(todosProvider.notifier).addTodo(
-                                ToDo(id: DateTime.now().millisecondsSinceEpoch, description: description),
+                                ToDo(id: DateTime.now().millisecondsSinceEpoch, description: description),//id 現在の時間.
                             );
                             Navigator.pop(context,'OK');
                           },
