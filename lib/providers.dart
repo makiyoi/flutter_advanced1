@@ -2,9 +2,9 @@ import 'package:flutter_advanced_1/models.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
   const List<ToDo> todosList = [
-    ToDo(id: 1,description: 'task1'),
-    ToDo(id: 2,description: 'task2'),
-    ToDo(id: 3,description: 'task3'),
+    ToDo(id: 0,description: 'task1'),
+    ToDo(id: 1,description: 'task2'),
+    ToDo(id: 2,description: 'task3'),
  ];
 
 class TodosNotifier extends StateNotifier<List<ToDo>> {

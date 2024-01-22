@@ -40,19 +40,19 @@ class Usually extends ConsumerWidget {
                       if (oldIndex < newIndex) {
                         newIndex -= 1;
                       }
-                       ToDo todo = todosList.removeAt(oldIndex);
+                     final  ToDo todo = todosList.removeAt(oldIndex);
                       todosList.insert(newIndex, todo);
                    // });
                     },
                   children: todosList.map<Widget>((ToDo todo) {
                     return Card(
-                        key: Key(todo.id.toString()), //keyの扱い方がわからない
+                        key: Key(todo.id.toString()), //id一意の値
                         child: CheckboxListTile(
                           value: todo.isCompleted,
                           checkColor: Colors.green,
                           fillColor: MaterialStateProperty.resolveWith((
                               states) => Colors.transparent),
-                          tileColor: Colors.lightGreen[200],
+                          tileColor: todo.id.isOdd ? Colors.grey[200] : Colors.green[200],
                           title: Text(todo.description, style: TextStyle(
                               decoration: todo.isCompleted ? TextDecoration
                                   .lineThrough

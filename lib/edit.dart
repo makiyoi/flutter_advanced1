@@ -117,7 +117,7 @@ class Edit extends ConsumerWidget {
                 return Card(
                   key:  Key(todo.id.toString()),
                   child: ListTile(
-                    tileColor:  Colors.green[200],
+                    tileColor:  todo.id.isOdd ? Colors.grey[200] : Colors.green[200],
                     title: Text(todo.description),
                     trailing: IconButton(
                       icon:  const Icon(Icons.close,color: Colors.green,),
@@ -145,7 +145,7 @@ class Edit extends ConsumerWidget {
                             TextButton(
                               onPressed:(){
                               ref.read(todosProvider.notifier).editTodo(id: todo.id, description: description );//編集メソッド
-                                editingController.clear();
+                               editingController.clear();
                               },
                               child: const Text('OK'),
                             ),
