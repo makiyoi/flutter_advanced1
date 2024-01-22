@@ -6,8 +6,8 @@ import 'package:flutter_advanced_1/edit.dart';
 
 
 class Usually extends ConsumerWidget {
-  Usually({super.key, required this.title});
- final List<int> _items = List<int>.generate(10, (int index) => index);
+  const Usually({super.key, required this.title});
+ //
   final String title;
 
   @override
@@ -34,7 +34,7 @@ class Usually extends ConsumerWidget {
           child: Consumer(
               builder: (context, ref, child) {
                 final List<ToDo> todosList = ref.watch(todosProvider);
-                return ReorderableListView(
+                return ReorderableListView( //並び替えが上手くできないのはkeyが間違っている？
                   onReorder: (int oldIndex, int newIndex) {
                    // setState((){
                       if (oldIndex < newIndex) {
@@ -46,7 +46,7 @@ class Usually extends ConsumerWidget {
                     },
                   children: todosList.map<Widget>((ToDo todo) {
                     return Card(
-                        key: Key(todo.description.toString()),
+                        key: Key('$todo'), //keyの扱い方がわからない
                         child: CheckboxListTile(
                           value: todo.isCompleted,
                           checkColor: Colors.green,
@@ -66,8 +66,8 @@ class Usually extends ConsumerWidget {
                   ).toList(),
                 );
               }
-              )
-      )
+              ),
+      ),
     );
   }
 }

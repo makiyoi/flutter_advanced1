@@ -5,11 +5,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 class Edit extends ConsumerWidget {
-  Edit({Key? key, required this.title}) : super(key: key);
+  const Edit({Key? key, required this.title}) : super(key: key);
   final String title;
-  final List<int> _items = List<int>.generate(6, (int index) => index);
-
-
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -74,7 +71,6 @@ class Edit extends ConsumerWidget {
                   ),
                 ),
               ),
-              //key: const ValueKey('ReorderableListView'),
               onReorder: (int oldIndex, int newIndex) {
 
                 if (oldIndex < newIndex) {
@@ -119,9 +115,9 @@ class Edit extends ConsumerWidget {
               ),
               children: todoList.map<Widget>((ToDo todo) {
                 return Card(
-                  key:  Key(todo.id.toString()),
+                  key:  Key('$todo'),
                   child: ListTile(
-                    tileColor:  Colors.green[200], //: Colors.grey,
+                    tileColor:  Colors.green[200],
                     title: Text(todo.description),
                     trailing: IconButton(
                       icon:  const Icon(Icons.close,color: Colors.green,),
@@ -133,12 +129,11 @@ class Edit extends ConsumerWidget {
                       context: context,
                       builder: (context) {
                         String description = '';
-                        TextEditingController textEditingController = TextEditingController();
                         return AlertDialog(
                           title: const Text('編集'),
                           content: TextField(
                             onChanged: (value){
-                             textEditingController.text = todo.description;
+                            description = value;
                             },
                           ),
                           actions: [
@@ -149,7 +144,7 @@ class Edit extends ConsumerWidget {
                             TextButton(
                               onPressed:(){
                                 Navigator.pop(context,'Ok');
-                              ref.read(todosProvider.notifier).editTodo(id: todo.id, description: textEditingController.text );
+                              ref.read(todosProvider.notifier).editTodo(id: todo.id, description: description ); //編集メソッド
                               },
                               child: const Text('OK'),
                             ),
