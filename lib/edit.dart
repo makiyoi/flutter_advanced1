@@ -115,23 +115,24 @@ class Edit extends ConsumerWidget {
               ),
               children: todoList.map<Widget>((ToDo todo) {
                 return Card(
-                  key:  Key('$todo'),
+                  key:  Key(todo.id.toString()),
                   child: ListTile(
                     tileColor:  Colors.green[200],
                     title: Text(todo.description),
                     trailing: IconButton(
                       icon:  const Icon(Icons.close,color: Colors.green,),
-                      onPressed: (){ref.read(todosProvider.notifier).removeTodo(
-                          todo.id);
+                      onPressed: (){ ref.read(todosProvider.notifier).removeTodo(todo.id);
                       },
                     ),
                     onTap: ()=>showDialog<String>(
                       context: context,
                       builder: (context) {
                         String description = '';
+                        TextEditingController editingController = TextEditingController();
                         return AlertDialog(
                           title: const Text('編集'),
                           content: TextField(
+                            controller: editingController,
                             onChanged: (value){
                             description = value;
                             },
@@ -143,8 +144,8 @@ class Edit extends ConsumerWidget {
                             ),
                             TextButton(
                               onPressed:(){
-                                Navigator.pop(context,'Ok');
-                              ref.read(todosProvider.notifier).editTodo(id: todo.id, description: description ); //編集メソッド
+                              ref.read(todosProvider.notifier).editTodo(id: todo.id, description: description );//編集メソッド
+                                editingController.clear();
                               },
                               child: const Text('OK'),
                             ),

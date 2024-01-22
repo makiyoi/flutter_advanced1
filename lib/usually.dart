@@ -46,7 +46,7 @@ class Usually extends ConsumerWidget {
                     },
                   children: todosList.map<Widget>((ToDo todo) {
                     return Card(
-                        key: Key('$todo'), //keyの扱い方がわからない
+                        key: Key(todo.id.toString()), //keyの扱い方がわからない
                         child: CheckboxListTile(
                           value: todo.isCompleted,
                           checkColor: Colors.green,
