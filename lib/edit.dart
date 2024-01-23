@@ -88,6 +88,7 @@ class Edit extends ConsumerWidget {
                     context: context,
                     builder: (context) {
                       String description = '';
+
                       return AlertDialog(
                         title: const Text('タスクを追加'),
                         content: TextField(
@@ -101,7 +102,7 @@ class Edit extends ConsumerWidget {
                           ),
                           TextButton(onPressed: (){
                             ref.read(todosProvider.notifier).addTodo(
-                                ToDo(id: DateTime.now().millisecondsSinceEpoch, description: description),//id 現在の時間.
+                                ToDo(id: 4, description: description)//id 現在の時間.
                             );
                             Navigator.pop(context,'OK');
                           },
@@ -118,7 +119,7 @@ class Edit extends ConsumerWidget {
                   key:  Key(todo.id.toString()),
                   child: ListTile(
                     tileColor:  todo.id.isOdd ? Colors.grey[200] : Colors.green[200],
-                    title: Text(todo.description),
+                    title: Text(todo.id.toString()),
                     trailing: IconButton(
                       icon:  const Icon(Icons.close,color: Colors.green,),
                       onPressed: (){ ref.read(todosProvider.notifier).removeTodo(todo.id);
