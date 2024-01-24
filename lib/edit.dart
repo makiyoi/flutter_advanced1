@@ -101,8 +101,7 @@ class Edit extends ConsumerWidget {
                             child: const Text('Cancel'),
                           ),
                           TextButton(onPressed: (){
-                            ref.read(todosProvider.notifier).addTodo(
-                                ToDo(id: 0, description: description)//id 現在の時間.
+                            ref.read(todosProvider.notifier).addTodo(ToDo(id: 1, description: description)//id 現在の時間.
                             );
                             //todoId++;
                             Navigator.pop(context,'OK');
@@ -121,7 +120,7 @@ class Edit extends ConsumerWidget {
                   key:  Key(todo.id.toString()),
                   child: ListTile(
                     tileColor:  todo.id.isOdd ? Colors.grey[200] : Colors.green[200],
-                    title: Text(todo.id.toString()),
+                    title: Text(todo.description),
                     trailing: IconButton(
                       icon:  const Icon(Icons.close,color: Colors.green,),
                       onPressed: (){ ref.read(todosProvider.notifier).removeTodo(todo.id);
