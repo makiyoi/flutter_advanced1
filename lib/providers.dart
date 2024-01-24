@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
  ];
 
 class TodosNotifier extends StateNotifier<List<ToDo>> {
-  TodosNotifier() : super([]);
+  TodosNotifier() : super(todosList);
 
   //void addTodo(ToDo newTodo) {
   //  List<ToDo> newState = [];
@@ -18,10 +18,11 @@ class TodosNotifier extends StateNotifier<List<ToDo>> {
    // newState.add(newTodo);
   //  state = newState;
  // }
+  int todoId = 4;
+
   void addTodo(ToDo todo){
-    int todoId = 4;
-    state = [...state,todo];
     todo.copyWith(id: todoId++);
+    state = [...state,todo];
   }
 
   //void toggle(int id) {
