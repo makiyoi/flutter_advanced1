@@ -87,7 +87,7 @@ class Edit extends ConsumerWidget {
                   onTap: ()=>showDialog<String>(
                     context: context,
                     builder: (context) {
-                      String description = '';int todoId = 0;
+                      String description = '';
 
                       return AlertDialog(
                         title: const Text('タスクを追加'),
@@ -102,7 +102,7 @@ class Edit extends ConsumerWidget {
                           ),
                           TextButton(onPressed: (){
                             ref.read(todosProvider.notifier).addTodo(
-                                ToDo(id: todoId, description: description)//id 現在の時間.
+                                ToDo(id: 0, description: description)//id 現在の時間.
                             );
                             //todoId++;
                             Navigator.pop(context,'OK');
@@ -148,7 +148,7 @@ class Edit extends ConsumerWidget {
                             TextButton(
                               onPressed:(){
                               ref.read(todosProvider.notifier).editTodo(id: todo.id, description: description );//編集メソッド
-                              // editingController.clear();
+                                Navigator.pop(context,'OK');
                               },
                               child: const Text('OK'),
                             ),

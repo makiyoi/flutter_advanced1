@@ -77,10 +77,9 @@ class TodosNotifier extends StateNotifier<List<ToDo>> {
  void editTodo({required int id, required String description}){  //編集メソッドとして間違っている？
     state= [
       for(final todo in state)
-        if(todo.id == todo.id)
+        if(todo.id == id)
           todo.copyWith(
-            id: todo.id,
-            description: todo.description,
+            description: description,
           )
       else
         todo,
