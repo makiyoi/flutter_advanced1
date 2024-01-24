@@ -19,7 +19,9 @@ class TodosNotifier extends StateNotifier<List<ToDo>> {
   //  state = newState;
  // }
   void addTodo(ToDo todo){
+    int todoId = 4;
     state = [...state,todo];
+    todo.copyWith(id: todoId++);
   }
 
   //void toggle(int id) {

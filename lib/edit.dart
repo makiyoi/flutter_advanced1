@@ -87,8 +87,7 @@ class Edit extends ConsumerWidget {
                   onTap: ()=>showDialog<String>(
                     context: context,
                     builder: (context) {
-                      String description = '';
-                      int todoId = 0;
+                      String description = '';int todoId = 0;
 
                       return AlertDialog(
                         title: const Text('タスクを追加'),
