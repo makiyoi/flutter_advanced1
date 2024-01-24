@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
  ];
 
 class TodosNotifier extends StateNotifier<List<ToDo>> {
-  TodosNotifier() : super(todosList);
+  TodosNotifier() : super([]);
 
   //void addTodo(ToDo newTodo) {
   //  List<ToDo> newState = [];

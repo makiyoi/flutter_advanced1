@@ -83,11 +83,12 @@ class Edit extends ConsumerWidget {
                 child: ListTile(
                   leading: const Icon(Icons.add),
                   title: const Text('タスク追加'),
-                  tileColor: Colors.grey[500],
+                  tileColor: Colors.grey[200],
                   onTap: ()=>showDialog<String>(
                     context: context,
                     builder: (context) {
                       String description = '';
+                      int todoId = 0;
 
                       return AlertDialog(
                         title: const Text('タスクを追加'),
@@ -102,9 +103,11 @@ class Edit extends ConsumerWidget {
                           ),
                           TextButton(onPressed: (){
                             ref.read(todosProvider.notifier).addTodo(
-                                ToDo(id: 4, description: description)//id 現在の時間.
+                                ToDo(id: todoId, description: description)//id 現在の時間.
                             );
+                            //todoId++;
                             Navigator.pop(context,'OK');
+
                           },
                             child: const Text('OK'),
                           ),
@@ -146,7 +149,7 @@ class Edit extends ConsumerWidget {
                             TextButton(
                               onPressed:(){
                               ref.read(todosProvider.notifier).editTodo(id: todo.id, description: description );//編集メソッド
-                               editingController.clear();
+                              // editingController.clear();
                               },
                               child: const Text('OK'),
                             ),
