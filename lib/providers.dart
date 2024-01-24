@@ -20,9 +20,8 @@ class TodosNotifier extends StateNotifier<List<ToDo>> {
  // }
   int todoId = 4;  //4をtodoIdに代入する
 
-  void addTodo(ToDo todo){
-    todo.copyWith(id: todoId++);  //新しく追加される度にidが1ずつ増える
-    state = [...state,todo];
+  void addTodo(ToDo todo){//新しく追加される度にidが1ずつ増える
+    state = [...state,todo.copyWith(id: todoId++)];
   }
 
   //void toggle(int id) {
