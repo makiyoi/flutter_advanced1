@@ -9,9 +9,10 @@ class Usually extends ConsumerWidget {
   const Usually({super.key, required this.title});
  //
   final String title;
-
+//  final List<int> _items = List<int>.generate(10, (int index) => index);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final List<ToDo> todosList = ref.watch(todosProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -33,16 +34,13 @@ class Usually extends ConsumerWidget {
           padding: const EdgeInsets.all(10),
           child: Consumer(
               builder: (context, ref, child) {
-                final List<ToDo> todosList = ref.watch(todosProvider);
                 return ReorderableListView( //並び替えが上手くできないのはkeyが間違っている？
                   onReorder: (int oldIndex, int newIndex) {
-                   // setState((){
                       if (oldIndex < newIndex) {
                         newIndex -= 1;
                       }
                      final  ToDo todo = todosList.removeAt(oldIndex);
                       todosList.insert(newIndex, todo);
-                   // });
                     },
                   children: todosList.map<Widget>((ToDo todo) {
                     return Card(

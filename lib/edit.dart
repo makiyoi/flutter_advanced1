@@ -59,7 +59,7 @@ class Edit extends ConsumerWidget {
                           ),
                           TextButton(onPressed: (){
                             ref.read(todosProvider.notifier).addTodo(
-                                ToDo(id: DateTime.now().millisecondsSinceEpoch, description: text),
+                                ToDo(id: 0, description: text),
                             );
                             Navigator.pop(context,'OK');
                           },
@@ -76,8 +76,8 @@ class Edit extends ConsumerWidget {
                 if (oldIndex < newIndex) {
                   newIndex -= 1;
                 }
-                final ToDo todo = todoList.removeAt(oldIndex);
-                todoList.insert(newIndex, todo);
+                final ToDo todo = todosList.removeAt(oldIndex);
+                todosList.insert(newIndex, todo);
               },
               footer:  Card(
                 child: ListTile(
@@ -115,7 +115,7 @@ class Edit extends ConsumerWidget {
                   ),
                 ),
               ),
-              children: todoList.map<Widget>((ToDo todo) {
+              children: todosList.map<Widget>((ToDo todo) {
                 return Card(
                   key:  Key(todo.id.toString()),
                   child: ListTile(
