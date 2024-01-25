@@ -12,7 +12,7 @@ class Usually extends ConsumerWidget {
 //  final List<int> _items = List<int>.generate(10, (int index) => index);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<ToDo> todosList = ref.watch(todosProvider);
+    final List<ToDo> todoList = ref.watch(todosProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -42,7 +42,7 @@ class Usually extends ConsumerWidget {
                      final  ToDo todo = todosList.removeAt(oldIndex);
                       todosList.insert(newIndex, todo);
                     },
-                  children: todosList.map<Widget>((ToDo todo) {
+                  children: todoList.map<Widget>((ToDo todo) {
                     return Card(
                         key: Key(todo.id.toString()), //id一意の値
                         child: CheckboxListTile(
