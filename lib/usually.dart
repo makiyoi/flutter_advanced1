@@ -35,12 +35,11 @@ class Usually extends ConsumerWidget {
           child: Consumer(
               builder: (context, ref, child) {
                 return ReorderableListView( //並び替えが上手くできないのはkeyが間違っている？
-                  onReorder: (int oldIndex, int newIndex) {
+                  onReorder: (oldIndex, newIndex) {
                       if (oldIndex < newIndex) {
                         newIndex -= 1;
                       }
-                    final  ToDo todo = todosList.removeAt(oldIndex);
-                      todosList.insert(newIndex, todo);
+                    // ref.read(todosProvider.notifier).rearranges();
                     },
                   children: todoList.map<Widget>((ToDo todo) {
                     return Card(

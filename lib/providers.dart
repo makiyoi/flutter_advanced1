@@ -64,7 +64,15 @@ class TodosNotifier extends StateNotifier<List<ToDo>> {
     ];
   }
 
-
+//  void editTodo(ToDo todo){
+  //  List<ToDo> newState = [];
+   // for(final todo in state){
+    //  if(todo.id == id){
+     //  newState.update(todo);
+    //  }
+   // }
+   // state =newState;
+ // }
  void editTodo({required int id, required String description}){
     state= [
       for(final todo in state)
@@ -77,13 +85,15 @@ class TodosNotifier extends StateNotifier<List<ToDo>> {
     ];
  }
 
- void rearranges(ToDo todo){
+ void rearranges(ToDo todo) {
    state = [
      todo.copyWith(
          id: todo.id,
-         description: todo.description)
-   ];
+         description: todo.description)];//リストをコピーする
+ final ToDo todos = state.removeAt(todo.id);//コピーしたリストを、削除、挿入する
+   state.insert(todo.id, todos);
  }
+
 }
 
 
