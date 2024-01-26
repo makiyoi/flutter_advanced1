@@ -84,6 +84,14 @@ class TodosNotifier extends StateNotifier<List<ToDo>> {
         todo,
     ];
  }
+
+ void lineUp(ToDo todo){
+   state = [
+     todo.copyWith(
+         id: todo.id,
+         description: todo.description)
+   ];
+ }
 }
 
 

@@ -9,7 +9,7 @@ class Usually extends ConsumerWidget {
   const Usually({super.key, required this.title});
  //
   final String title;
-//  final List<int> _items = List<int>.generate(10, (int index) => index);
+ //final List<int> _items = List<int>.generate(10, (int index) => index);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<ToDo> todoList = ref.watch(todosProvider);
@@ -22,7 +22,7 @@ class Usually extends ConsumerWidget {
             icon: const Icon(Icons.border_color),
             onPressed: () =>
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const Edit(title: 'ToDoリスト'))),
+                    builder: (context) =>  Edit(title: 'ToDoリスト'))),
           ),
         ],
         backgroundColor: Theme
@@ -39,7 +39,7 @@ class Usually extends ConsumerWidget {
                       if (oldIndex < newIndex) {
                         newIndex -= 1;
                       }
-                     final  ToDo todo = todosList.removeAt(oldIndex);
+                    final  ToDo todo = todosList.removeAt(oldIndex);
                       todosList.insert(newIndex, todo);
                     },
                   children: todoList.map<Widget>((ToDo todo) {
