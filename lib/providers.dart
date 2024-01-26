@@ -64,15 +64,7 @@ class TodosNotifier extends StateNotifier<List<ToDo>> {
     ];
   }
 
-//  void editTodo(ToDo todo){
-  //  List<ToDo> newState = [];
-   // for(final todo in state){
-    //  if(todo.id == todo.id){
-     //  newState.update(todo);
-    //  }
-   // }
-   // state =newState;
- // }
+
  void editTodo({required int id, required String description}){
     state= [
       for(final todo in state)
@@ -85,7 +77,7 @@ class TodosNotifier extends StateNotifier<List<ToDo>> {
     ];
  }
 
- void lineUp(ToDo todo){
+ void rearranges(ToDo todo){
    state = [
      todo.copyWith(
          id: todo.id,
