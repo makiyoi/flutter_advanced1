@@ -92,8 +92,8 @@ class TodosNotifier extends StateNotifier<List<ToDo>> {
          description: todo.description)];//リストをコピーする
  final ToDo todos = state.removeAt(todo.id);//コピーしたリストを、削除、挿入する
    state.insert(todo.id, todos);
+   state = [todos];
  }
-
 }
 
 

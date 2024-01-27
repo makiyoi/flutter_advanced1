@@ -22,7 +22,7 @@ class Usually extends ConsumerWidget {
             icon: const Icon(Icons.border_color),
             onPressed: () =>
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) =>  Edit(title: 'ToDoリスト'))),
+                    builder: (context) =>  const Edit(title: 'ToDoリスト'))),
           ),
         ],
         backgroundColor: Theme
