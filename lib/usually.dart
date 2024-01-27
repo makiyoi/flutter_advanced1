@@ -39,7 +39,7 @@ class Usually extends ConsumerWidget {
                       if (oldIndex < newIndex) {
                         newIndex -= 1;
                       }
-                    // ref.read(todosProvider.notifier).rearranges();
+                   // ref.read(todosProvider.notifier).rearranges();
                     },
                   children: todoList.map<Widget>((ToDo todo) {
                     return Card(
