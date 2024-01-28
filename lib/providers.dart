@@ -93,7 +93,7 @@ class TodosNotifier extends StateNotifier<List<ToDo>> {
 
    ToDo todos = newList.removeAt(oldIndex); //コピーしたリストを削除、挿入する
    newList.insert(newIndex, todos);
-   state = [todos];
+   state = newList;
  }
 }
 
