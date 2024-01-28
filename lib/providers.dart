@@ -85,10 +85,14 @@ class TodosNotifier extends StateNotifier<List<ToDo>> {
     ];
  }
 
- void rearranges(ToDo todo) {
-   List<ToDo>  newList = List.from(todosList);
-   ToDo todos = newList.removeAt(todo.id);
-   newList.insert(todo.id, todos);
+ void rearranges(int oldIndex, int newIndex ) {
+   List<ToDo>  newList = List.from(todosList); //リストをコピーする
+   if (oldIndex < newIndex) {
+     newIndex -= 1;
+   }
+
+   ToDo todos = newList.removeAt(oldIndex); //コピーしたリストを削除、挿入する
+   newList.insert(newIndex, todos);
    state = [todos];
  }
 }

@@ -36,9 +36,7 @@ class Usually extends ConsumerWidget {
               builder: (context, ref, child) {
                 return ReorderableListView( //並び替えが上手くできないのはkeyが間違っている？
                   onReorder: (oldIndex, newIndex) {
-                      if (oldIndex < newIndex) {
-                        newIndex -= 1;
-                      }
+
                    // ref.read(todosProvider.notifier).rearranges();
                     },
                   children: todoList.map<Widget>((ToDo todo) {
