@@ -34,7 +34,7 @@ class Usually extends ConsumerWidget {
                 final List<ToDo> todoList = ref.watch(todosProvider);
                 ref.listen<List<ToDo>>(completedTodosProvider, (List<ToDo>? previousTodos, List<ToDo> newTodos) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text('現在${newTodos.length}個のタスクがあります'),
+                    content: Text('現在${newTodos.length}個の完了タスクがあります'),
                       duration: const Duration(milliseconds: 600),
                   ));
                 });
