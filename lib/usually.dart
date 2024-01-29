@@ -5,14 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_advanced_1/edit.dart';
 
 
-
 class Usually extends ConsumerWidget {
   const Usually({super.key, required this.title});
   final String title;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<ToDo> todoList = ref.watch(todosProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -32,7 +29,10 @@ class Usually extends ConsumerWidget {
       ),
       body: Padding(
           padding: const EdgeInsets.all(10),
-          child: ReorderableListView( //並び替えが上手くできないのはkeyが間違っている？
+          child: Consumer(
+              builder: (context, ref, child) {
+                final List<ToDo> todoList = ref.watch(todosProvider);
+                return ReorderableListView( //並び替えが上手くできないのはkeyが間違っている？
                   onReorder: (int oldIndex,int newIndex) {
                     ref.read(todosProvider.notifier).rearranges(newIndex,oldIndex);
                     },
@@ -56,7 +56,9 @@ class Usually extends ConsumerWidget {
                       );
                   }
                   ).toList(),
-                )
+                );
+              }
+              ),
       ),
     );
   }

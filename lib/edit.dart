@@ -12,7 +12,6 @@ class Edit extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     //final completedTodos= ref.watch(completedTodosProvider);
     //final  unfinishedTodos = ref.watch(unfinishedTodosProvider);
-    final List<ToDo> todoList = ref.watch(todosProvider);
     return Scaffold(
         appBar: AppBar(
           title: Text(title),
@@ -27,121 +26,133 @@ class Edit extends ConsumerWidget {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         ),
         body: Padding(
-        padding: const EdgeInsets.all(5),
-
-            child: ReorderableListView(
-              header:  Card(
-                child: ListTile(
-                  leading: const Icon(Icons.add),
-                  title: const Text('タスク追加'),
-                  onTap: ()=>showDialog<String>(
-                    context: context,
-                    builder: (context) {
-                      String text = '';
-                      return AlertDialog(
-                        title: const Text('タスクを追加'),
-                        content: TextField(
-                          onChanged: (value){
-                            text = value;
+          padding: const EdgeInsets.all(5),
+            child: Consumer(
+                builder: (context, ref, child) {
+                  final List<ToDo> todoList = ref.watch(todosProvider);
+                  return ReorderableListView(
+                    header: Card(
+                      child: ListTile(
+                        leading: const Icon(Icons.add),
+                        title: const Text('タスク追加'),
+                        onTap: () => showDialog<String>(
+                          context: context,
+                          builder: (context) {
+                            String text = '';
+                            return AlertDialog(
+                              title: const Text('タスクを追加'),
+                              content: TextField(
+                                onChanged: (value) {
+                                  text = value;
+                                },
+                              ),
+                              actions: <Widget>[
+                                TextButton(onPressed: () =>
+                                    Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(onPressed: () {
+                                  ref.read(todosProvider.notifier).addTodo(
+                                    ToDo(id: 0, description: text),
+                                  );
+                                  Navigator.pop(context, 'OK');
+                                },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            );
                           },
                         ),
-                        actions: <Widget>[
-                          TextButton(onPressed:()=>Navigator.pop(context,'Cancel'),
-                            child: const Text('Cancel'),
-                          ),
-                          TextButton(onPressed: (){
-                            ref.read(todosProvider.notifier).addTodo(ToDo(id: 0, description: text),
-                            );
-                            Navigator.pop(context,'OK');
-                          },
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      );
-                    },
                   ),
                 ),
-              ),
-              onReorder: (int oldIndex,int newIndex) {
-                ref.read(todosProvider.notifier).rearranges(oldIndex, newIndex);
-              },
-              footer:  Card(
-                child: ListTile(
-                  leading: const Icon(Icons.add),
-                  title: const Text('タスク追加'),
-                  tileColor: Colors.grey[200],
-                  onTap: ()=>showDialog<String>(
-                    context: context,
-                    builder: (context) {
-                      String description = '';
-                      return AlertDialog(
-                        title: const Text('タスクを追加'),
-                        content: TextField(
-                          onChanged: (value){
-                            description = value;
+                    onReorder: (int oldIndex, int newIndex) {
+                      ref.read(todosProvider.notifier).rearranges(oldIndex, newIndex);},
+                    footer: Card(
+                      child: ListTile(
+                        leading: const Icon(Icons.add),
+                        title: const Text('タスク追加'),
+                        tileColor: Colors.grey[200],
+                        onTap: () => showDialog<String>(
+                          context: context,
+                          builder: (context) {
+                            String description = '';
+                            return AlertDialog(
+                              title: const Text('タスクを追加'),
+                              content: TextField(
+                                onChanged: (value) {
+                                  description = value;
+                                },
+                              ),
+                              actions: <Widget>[
+                                TextButton(onPressed: () =>
+                                    Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(onPressed: () {
+                                  ref.read(todosProvider.notifier).addTodo(ToDo(
+                                      id: 1,
+                                      description: description) //id 現在の時間.
+                                  );
+                                  Navigator.pop(context, 'OK');
+                                },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            );
                           },
                         ),
-                        actions: <Widget>[
-                          TextButton(onPressed:()=>Navigator.pop(context,'Cancel'),
-                            child: const Text('Cancel'),
-                          ),
-                          TextButton(onPressed: (){
-                            ref.read(todosProvider.notifier).addTodo(ToDo(id: 1, description: description)//id 現在の時間.
-                            );
-                            Navigator.pop(context,'OK');
-                          },
-                            child: const Text('OK'),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-              ),
-              children: todoList.map<Widget>((ToDo todo) {
-                return Card(
-                  key:  Key(todo.id.toString()),
-                  child: ListTile(
-                    tileColor:  todo.id.isOdd ? Colors.grey[200] : Colors.green[200],
-                    title: Text(todo.description),
-                    trailing: IconButton(
-                      icon:  const Icon(Icons.close,color: Colors.green,),
-                      onPressed: (){ ref.read(todosProvider.notifier).removeTodo(todo.id);
-                      },
+                      ),
                     ),
-                    onTap: ()=>showDialog<String>(
-                      context: context,
-                      builder: (context) {
-                        String description = '';
-                        TextEditingController editingController = TextEditingController();
-                        return AlertDialog(
-                          title: const Text('編集'),
-                          content: TextField(
-                            controller: editingController,
-                            onChanged: (value){
-                            description = value;
+                    children: todoList.map<Widget>((ToDo todo) {
+                      return Card(
+                        key: Key(todo.id.toString()),
+                        child: ListTile(
+                          tileColor: todo.id.isOdd ? Colors.grey[200] : Colors.green[200],
+                          title: Text(todo.description),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.close, color: Colors.green,),
+                            onPressed: () {
+                              ref.read(todosProvider.notifier).removeTodo(todo.id);
+                              },
+                          ),
+                          onTap: () => showDialog<String>(
+                            context: context,
+                            builder: (context) {
+                              String description = '';
+                              TextEditingController editingController = TextEditingController();
+                              return AlertDialog(
+                                title: const Text('編集'),
+                                content: TextField(
+                                  controller: editingController,
+                                  onChanged: (value) {
+                                    description = value;
+                                  },
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, 'Cancel'),
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      ref.read(todosProvider.notifier).editTodo(
+                                          id: todo.id,
+                                          description: description); //編集メソッド
+                                      Navigator.pop(context, 'OK');
+                                    },
+                                    child: const Text('OK'),
+                                  ),
+                                ],
+                              );
                             },
                           ),
-                          actions: [
-                            TextButton(
-                              onPressed: ()=>Navigator.pop(context,'Cancel'),
-                              child: const Text('Cancel'),
-                            ),
-                            TextButton(
-                              onPressed:(){
-                              ref.read(todosProvider.notifier).editTodo(id: todo.id, description: description );//編集メソッド
-                                Navigator.pop(context,'OK');
-                              },
-                              child: const Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
                     ),
-                  ),
-                );
-              }).toList(),
-            )
+                  );
+                }).toList(),
+              );
+            }
+            ),
         ),
     );
   }
