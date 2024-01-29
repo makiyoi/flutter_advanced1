@@ -90,9 +90,8 @@ class TodosNotifier extends StateNotifier<List<ToDo>> {
    if (oldIndex < newIndex) {
      newIndex -= 1;
    }
-
-   ToDo todos = newList.removeAt(oldIndex); //コピーしたリストを削除、挿入する
-   newList.insert(newIndex, todos);
+   ToDo todoIndex = newList.removeAt(oldIndex); //コピーしたリストを削除、挿入する
+   newList.insert(newIndex, todoIndex);
    state = newList;
  }
 }
@@ -108,7 +107,7 @@ final todosProvider = StateNotifierProvider<TodosNotifier,List<ToDo>>((ref) {
    // final todos = ref.watch(todosProvider);
   //  return todos.where((todo) => todo.isCompleted).toList();
  //  });
-  final unfinishedTodosProvider =  Provider<List<ToDo>>((ref) {
+ final unfinishedTodosProvider =  Provider<List<ToDo>>((ref) {
     final todos = ref.watch(todosProvider);
    return todos.where((todo) => !todo.isCompleted).toList();
   });

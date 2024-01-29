@@ -12,6 +12,7 @@ class Edit extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     //final completedTodos= ref.watch(completedTodosProvider);
     //final  unfinishedTodos = ref.watch(unfinishedTodosProvider);
+    final List<ToDo> todoList = ref.watch(todosProvider);
     return Scaffold(
         appBar: AppBar(
           title: Text(title),
@@ -23,21 +24,12 @@ class Edit extends ConsumerWidget {
               onPressed: () => Navigator.of(context).pop(),
             ),
           ],
-          backgroundColor: Theme
-              .of(context).colorScheme.inversePrimary,
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         ),
         body: Padding(
         padding: const EdgeInsets.all(5),
-         child: Consumer(
-          builder: (context, ref, child) {
-            final List<ToDo> todoList = ref.watch(todosProvider);
-           ref.listen<List<ToDo>>(unfinishedTodosProvider, (List<ToDo>? previousTodos, List<ToDo> newTodos) {
-             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-               content: Text('現在${newTodos.length}個の未完了タスクがあります'),
-               duration: const Duration(milliseconds: 600),
-             ));
-            });
-            return ReorderableListView(
+
+            child: ReorderableListView(
               header:  Card(
                 child: ListTile(
                   leading: const Icon(Icons.add),
@@ -58,8 +50,7 @@ class Edit extends ConsumerWidget {
                             child: const Text('Cancel'),
                           ),
                           TextButton(onPressed: (){
-                            ref.read(todosProvider.notifier).addTodo(
-                                ToDo(id: 0, description: text),
+                            ref.read(todosProvider.notifier).addTodo(ToDo(id: 0, description: text),
                             );
                             Navigator.pop(context,'OK');
                           },
@@ -71,13 +62,8 @@ class Edit extends ConsumerWidget {
                   ),
                 ),
               ),
-              onReorder: (int oldIndex, int newIndex) {
-
-                if (oldIndex < newIndex) {
-                  newIndex -= 1;
-                }
-                final ToDo todo = todosList.removeAt(oldIndex);
-                todosList.insert(newIndex, todo);
+              onReorder: (int oldIndex,int newIndex) {
+                ref.read(todosProvider.notifier).rearranges(oldIndex, newIndex);
               },
               footer:  Card(
                 child: ListTile(
@@ -158,9 +144,7 @@ class Edit extends ConsumerWidget {
                   ),
                 );
               }).toList(),
-            );
-          },
-        )
+            )
         ),
     );
   }

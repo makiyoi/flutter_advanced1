@@ -5,11 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_advanced_1/edit.dart';
 
 
+
 class Usually extends ConsumerWidget {
   const Usually({super.key, required this.title});
- //
   final String title;
- //final List<int> _items = List<int>.generate(10, (int index) => index);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<ToDo> todoList = ref.watch(todosProvider);
@@ -32,12 +32,9 @@ class Usually extends ConsumerWidget {
       ),
       body: Padding(
           padding: const EdgeInsets.all(10),
-          child: Consumer(
-              builder: (context, ref, child) {
-                return ReorderableListView( //並び替えが上手くできないのはkeyが間違っている？
-                  onReorder: (oldIndex, newIndex) {
-
-                    //ref.read(todosProvider.notifier).rearranges();
+          child: ReorderableListView( //並び替えが上手くできないのはkeyが間違っている？
+                  onReorder: (int oldIndex,int newIndex) {
+                    ref.read(todosProvider.notifier).rearranges(newIndex,oldIndex);
                     },
                   children: todoList.map<Widget>((ToDo todo) {
                     return Card(
@@ -59,9 +56,7 @@ class Usually extends ConsumerWidget {
                       );
                   }
                   ).toList(),
-                );
-              }
-              ),
+                )
       ),
     );
   }
