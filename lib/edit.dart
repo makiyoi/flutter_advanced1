@@ -31,6 +31,9 @@ class Edit extends ConsumerWidget {
                 builder: (context, ref, child) {
                   final List<ToDo> todoList = ref.watch(todosProvider);
                   return ReorderableListView(
+                    onReorder: (int oldIndex, int newIndex) {
+                      ref.read(todosProvider.notifier).rearranges(oldIndex, newIndex);
+                      },
                     header: Card(
                       child: ListTile(
                         leading: const Icon(Icons.add),
@@ -63,10 +66,8 @@ class Edit extends ConsumerWidget {
                             );
                           },
                         ),
-                  ),
-                ),
-                    onReorder: (int oldIndex, int newIndex) {
-                      ref.read(todosProvider.notifier).rearranges(oldIndex, newIndex);},
+                      ),
+                    ),
                     footer: Card(
                       child: ListTile(
                         leading: const Icon(Icons.add),

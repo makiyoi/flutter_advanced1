@@ -18,7 +18,7 @@ class MyApp extends ConsumerWidget{
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home:  Usually(title: 'ToDoリスト'),
+      home:  const Usually(title: 'ToDoリスト'),
     );
   }
 }
