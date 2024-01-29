@@ -32,9 +32,15 @@ class Usually extends ConsumerWidget {
           child: Consumer(
               builder: (context, ref, child) {
                 final List<ToDo> todoList = ref.watch(todosProvider);
+                ref.listen<List<ToDo>>(completedTodosProvider, (List<ToDo>? previousTodos, List<ToDo> newTodos) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text('現在${newTodos.length}個のタスクがあります'),
+                      duration: const Duration(milliseconds: 600),
+                  ));
+                });
                 return ReorderableListView( //並び替えが上手くできないのはkeyが間違っている？
                   onReorder: (int oldIndex,int newIndex) {
-                    ref.read(todosProvider.notifier).rearranges(newIndex,oldIndex);
+                    ref.read(todosProvider.notifier).rearranges(oldIndex,newIndex);
                     },
                   children: todoList.map<Widget>((ToDo todo) {
                     return Card(
