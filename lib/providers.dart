@@ -86,7 +86,7 @@ class TodosNotifier extends StateNotifier<List<ToDo>> {
  }
 
  void rearranges(int oldIndex, int newIndex ) {
-   List<ToDo>  newList = List.from(todosList); //リストをコピーする
+   List<ToDo>  newList = List.from(state); //リストをコピーする
    if (oldIndex < newIndex) {
      newIndex -= 1;
    }
