@@ -107,10 +107,10 @@ final todosProvider = StateNotifierProvider<TodosNotifier,List<ToDo>>((ref) {
    // final todos = ref.watch(todosProvider);
   //  return todos.where((todo) => todo.isCompleted).toList();
  //  });
- final unfinishedTodosProvider =  Provider<List<ToDo>>((ref) {
-    final todos = ref.watch(todosProvider);
-   return todos.where((todo) => !todo.isCompleted).toList();
-  });
+ //final unfinishedTodosProvider =  Provider<List<ToDo>>((ref) {
+   // final todos = ref.watch(todosProvider);
+ //  return todos.where((todo) => !todo.isCompleted).toList();
+//  });
 
 
 

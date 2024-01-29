@@ -74,7 +74,6 @@ class Edit extends ConsumerWidget {
                     context: context,
                     builder: (context) {
                       String description = '';
-
                       return AlertDialog(
                         title: const Text('タスクを追加'),
                         content: TextField(
@@ -89,9 +88,7 @@ class Edit extends ConsumerWidget {
                           TextButton(onPressed: (){
                             ref.read(todosProvider.notifier).addTodo(ToDo(id: 1, description: description)//id 現在の時間.
                             );
-                            //todoId++;
                             Navigator.pop(context,'OK');
-
                           },
                             child: const Text('OK'),
                           ),
