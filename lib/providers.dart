@@ -64,26 +64,25 @@ class TodosNotifier extends StateNotifier<List<ToDo>> {
     ];
   }
 
-//  void editTodo(ToDo todo){
-  //  List<ToDo> newState = [];
-   // for(final todo in state){
-    //  if(todo.id == id){
-     //  newState.update(todo);
-    //  }
-   // }
-   // state =newState;
- // }
+//  void editTodo(ToDo newTodo) {
+ //   List<ToDo> newState = [];
+ //   for (final todo in state) {
+ //     if (todo.id == todo.id) {
+ //       newState.add(todo);
+ //     }
+ //     newState.add(newTodo);
+ //     state = newState;
+ //   }
+//  }
  void editTodo({required int id, required String description}){
-    state= [
-      for(final todo in state)
-        if(todo.id == id)
-          todo.copyWith(
-            description: description,
-          )
-      else
-        todo,
-    ];
- }
+   state= [
+     for(final todo in state)
+       if(todo.id == id)
+         todo.copyWith(description: description)
+       else
+         todo,
+   ];
+  }
 
  void rearranges(int oldIndex, int newIndex ) {
    List<ToDo>  newList = List.from(state); //リストをコピーする
@@ -102,15 +101,6 @@ final todosProvider = StateNotifierProvider<TodosNotifier,List<ToDo>>((ref) {
 });
 
 
-
-  final completedTodosProvider =  Provider<List<ToDo>>((ref) {
-    final todos = ref.watch(todosProvider);
-    return todos.where((todo) => todo.isCompleted).toList();
-   });
- //final unfinishedTodosProvider =  Provider<List<ToDo>>((ref) {
-   // final todos = ref.watch(todosProvider);
- //  return todos.where((todo) => !todo.isCompleted).toList();
-//  });
 
 
 
