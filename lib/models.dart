@@ -11,10 +11,10 @@ class ToDo{
   final String description;
   final bool isCompleted;
 
-  @override
-  String toString() {
-    return 'Todo(description: $description, completed: $isCompleted)';
-  }
+ // @override
+  //String toString() {
+    //return 'Todo(description: $description, completed: $isCompleted)';
+ // }
 
   ToDo copyWith({int? id, String? description, bool? isCompleted}) {
     return ToDo(

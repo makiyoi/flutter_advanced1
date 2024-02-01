@@ -50,7 +50,7 @@ class TodosNotifier extends StateNotifier<List<ToDo>> {
  //void removeTodo(int todo){
   //  List<ToDo> newState = [];
   //  for(final todo in state){
-    //  if(todo.id != todo.id){
+    //  if(todo.id != id){
      //   newState.add(todo);
     //  }
    // }

@@ -79,7 +79,7 @@ class Edit extends ConsumerWidget { //編集
                               description = value;
                               },
                           ),
-                          actions: <Widget>[
+                          actions: [
                             TextButton(onPressed: () =>
                                 Navigator.pop(context, 'Cancel'),
                               child: const Text('Cancel'),
